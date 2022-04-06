@@ -1,0 +1,22 @@
+{
+  "name": "emscripten_test1",
+  "version": "1.0.0",
+  "description": "just for fun, need use some c++ libs in wasm on project at work",
+  "main": "index.js",
+  "scripts": {
+    "start": "node main",
+    "init":"cd ../emsdk/ && emsdk activate latest && emsdk_env.bat",
+    "emc": "emcc main.c -o main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vegarringdal/emscripten_test1.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vegarringdal/emscripten_test1/issues"
+  },
+  "homepage": "https://github.com/vegarringdal/emscripten_test1#readme"
+}
