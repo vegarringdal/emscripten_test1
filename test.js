@@ -1,4 +1,5 @@
 const m = require("./main.js");
+const { performance } = require("perf_hooks");
 
 m.onRuntimeInitialized = () => {
   // create array
@@ -7,6 +8,7 @@ m.onRuntimeInitialized = () => {
   const bytes = data.length + data.BYTES_PER_ELEMENT;
 
   // pointer
+  const t1 = performance.now();
   const dataPtr = m._malloc(bytes);
 
   // allocate/copy
@@ -22,7 +24,7 @@ m.onRuntimeInitialized = () => {
     dataHeap.byteOffset,
     data.length
   );
-  console.log(result);
+  console.log(result, performance.now() - t1);
 
   // Free memory
   m._free(dataHeap.byteOffset);
