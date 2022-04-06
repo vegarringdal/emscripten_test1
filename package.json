@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node main",
     "init": "cd ../emsdk/ && emsdk activate latest && emsdk_env.bat",
-    "emc": "emcc main.cpp -o main.js -s EXPORTED_FUNCTIONS=[_fill_float_array,_malloc,_free] -s ALLOW_MEMORY_GROWTH=1 -s EXPORTED_RUNTIME_METHODS=ccall,cwrap"
+    "emc": "emcc -O3 main.cpp -o main.js -s EXPORTED_FUNCTIONS=[_fill_float_array,_malloc,_free] -s ALLOW_MEMORY_GROWTH=1 -s MAXIMUM_MEMORY=4GB -s EXPORTED_RUNTIME_METHODS=ccall,cwrap"
   },
   "repository": {
     "type": "git",
