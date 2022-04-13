@@ -1182,6 +1182,11 @@ namespace Simplify
 		triangles.clear();
 		vertices.clear();
 
+		if (debug)
+		{
+			printf("READ called\n");
+		}
+
 		int l = indexSize / 3;
 		for (int i = 0; i < l; i++)
 		{
@@ -1225,6 +1230,12 @@ namespace Simplify
 
 	void fill(int *index, float *positions, bool debug = false)
 	{
+
+		if (debug)
+		{
+			printf("FILL called\n");
+		}
+
 		for (int i = 0; i < triangles.size(); i++)
 		{
 			int x = i * 3;
@@ -1247,9 +1258,9 @@ namespace Simplify
 			positions[x + 2] = vertices[i].p.z;
 			if (debug)
 			{
-				printf("index %g\n", positions[x]);
-				printf("index %g\n", positions[x + 1]);
-				printf("index %g\n", positions[x + 2]);
+				printf("positions %g\n", positions[x]);
+				printf("positions %g\n", positions[x + 1]);
+				printf("positions %g\n", positions[x + 2]);
 			}
 		}
 	}
