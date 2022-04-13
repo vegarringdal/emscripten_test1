@@ -1186,14 +1186,6 @@ namespace Simplify
 		for (int i = 0; i < l; i++)
 		{
 			int x = i * 3;
-			if (i < 3)
-			{
-				printf("Triangle:\n");
-				printf("index %d\n", index[x]);
-				printf("index %d\n", index[x + 1]);
-				printf("index %d\n", index[x + 2]);
-			}
-
 			Triangle t;
 			t.v[0] = index[x];
 			t.v[1] = index[x + 1];
@@ -1206,19 +1198,12 @@ namespace Simplify
 		for (int i = 0; i < indexSize; i++)
 		{
 			Vertex v;
-			int pos = index[i];
-			if (i < 3)
-			{
-				printf("Vertex:\n");
-				printf("positions %g\n", positions[pos]);
-				printf("positions %g\n", positions[pos + 1]);
-				printf("positions %g\n", positions[pos + 2]);
-			}
-
+			int pos = index[i] * 3;
 			v.p.x = positions[pos];
 			v.p.y = positions[pos + 1];
 			v.p.z = positions[pos + 2];
 			vertices.push_back(v);
+
 		}
 	}
 
@@ -1230,13 +1215,6 @@ namespace Simplify
 			index[x] = triangles[i].v[0];
 			index[x + 1] = triangles[i].v[1];
 			index[x + 2] = triangles[i].v[2];
-			if (triangles[i].deleted)
-			{
-				printf("deleted:\n");
-				printf("deleted %d\n", triangles[i].v[0]);
-				printf("deleted %d\n", triangles[i].v[1]);
-				printf("deleted %d\n", triangles[i].v[1]);
-			}
 		}
 
 		for (int i = 0; i < vertices.size(); i++)
