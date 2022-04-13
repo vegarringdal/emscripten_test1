@@ -4,15 +4,15 @@ const { performance } = require("perf_hooks");
 
 wasm.onRuntimeInitialized = () => {
   // add holder for data
-  const index = new DataSet(10, "int", wasm);
-  const position = new DataSet(10 * 3, "float", wasm);
+  const index = new DataSet(9, "int", wasm);
+  const position = new DataSet(9 * 3, "float", wasm);
 
   // add data
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 9; i++) {
     index.array[i] = i;
   }
 
-  for (let i = 0; i < 10 * 3; i++) {
+  for (let i = 0; i < 9 * 3; i++) {
     position.array[i] = i;
   }
 
@@ -64,10 +64,10 @@ wasm.onRuntimeInitialized = () => {
   wasm._free(index2.byteOffset);
   wasm._free(position2.byteOffset);
 
-  console.log(newIndex)
-  console.log(index.array)
-  console.log(newPosition)
-  console.log(position.array)
+  console.log(newIndex); // 10104, 10104, 2, 3, 4, 5, 6, 7, 40, wtf ???!?!
+  console.log(index.array); // 0, 1, 2, 3, 4, 5, 6, 7, 8
+  console.log(newPosition);
+  console.log(position.array);
   //return [newIndex2, newPosition2];
 };
 
@@ -91,11 +91,23 @@ class DataSet {
 
     this.byteSize = this.array.length * this.array.BYTES_PER_ELEMENT;
     this.ptr = wasmx._malloc(this.byteSize);
-    this.heap = new Uint8Array(wasmx.HEAP8.buffer, this.ptr, this.byteSize);
+    if (type === "int") {
+      this.heap = new Int32Array(wasmx.HEAP32.buffer, this.ptr, this.byteSize);
+    } else {
+      this.heap = new Float32Array(
+        wasmx.HEAP32.buffer,
+        this.ptr,
+        this.byteSize
+      );
+    }
   }
 
   updateHeap() {
-    this.heap.set(new Uint8Array(this.array.buffer));
+    if (this.type === "int") {
+      this.heap.set(new Int32Array(this.array.buffer));
+    } else {
+      this.heap.set(new Float32Array(this.array.buffer));
+    }
   }
 
   get byteOffset() {
