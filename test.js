@@ -47,7 +47,7 @@ wasm.onRuntimeInitialized = () => {
     newPositionSize0 * 3
   );
 
-  wasm._simplify_mesh(parseInt(newIndexSize0 * 0.96), 7, true);
+  wasm._simplify_mesh(parseInt(newIndexSize0 * 0.6), 7, true);
 
   // check after we have simplified it
   const newIndexSize1 = wasm._getTriangeSize();
@@ -107,23 +107,11 @@ class DataSet {
 
     this.byteSize = this.array.length * this.array.BYTES_PER_ELEMENT;
     this.ptr = wasmx._malloc(this.byteSize);
-    if (type === "int") {
-      this.heap = new Uint32Array(wasmx.HEAP32.buffer, this.ptr, this.byteSize);
-    } else {
-      this.heap = new Float32Array(
-        wasmx.HEAP32.buffer,
-        this.ptr,
-        this.byteSize
-      );
-    }
+    this.heap = new Int8Array(wasmx.HEAP8.buffer, this.ptr, this.byteSize);
   }
 
   updateHeap() {
-    if (this.type === "int") {
-      this.heap.set(new Int32Array(this.array.buffer));
-    } else {
-      this.heap.set(new Float32Array(this.array.buffer));
-    }
+    this.heap.set(new Int8Array(this.array.buffer));
   }
 
   get byteOffset() {
