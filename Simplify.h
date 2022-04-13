@@ -1243,12 +1243,12 @@ namespace Simplify
 
 	int getTriangeSize()
 	{
-		return triangles.size() * 3;
+		return triangles.size();
 	}
 
 	int getVertexSize()
 	{
-		return vertices.size() * 3;
+		return vertices.size();
 	}
 
 };

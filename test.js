@@ -22,41 +22,38 @@ wasm.onRuntimeInitialized = () => {
   wasm._simplify_mesh(10, 7, true);
   wasm._fill(index.byteOffset, position.byteOffset);
 
-  {
-    // check if we have filled it
-    const newIndexSize = wasm._getTriangeSize();
-    const newPositionSize = wasm._getVertexSize();
-    console.log(newIndexSize, newPositionSize);
-  }
+  // check if we have filled it
+  const newIndexSize = wasm._getTriangeSize();
+  const newPositionSize = wasm._getVertexSize();
+  console.log(newIndexSize, newPositionSize);
 
   wasm._simplify_mesh(50, 5, true);
   wasm._free(index.byteOffset);
   wasm._free(position.byteOffset);
 
-  {
-    const newIndexSize = wasm._getTriangeSize();
-    const newPositionSize = wasm._getVertexSize();
-    const index = new DataSet(newIndexSize * 3, "int", wasm);
-    const position = new DataSet(newPositionSize * 3, "float", wasm);
+  const newIndexSize2 = wasm._getTriangeSize();
+  const newPositionSize2 = wasm._getVertexSize();
+  const index2 = new DataSet(newIndexSize2 * 3, "int", wasm);
+  const position2 = new DataSet(newPositionSize2 * 3, "float", wasm);
 
-    wasm._fill(index.byteOffset, position.byteOffset);
+  wasm._fill(index2.byteOffset, position2.byteOffset);
 
-    // get result
-    const newIndex = new Int32Array(
-      index.buffer,
-      index.byteOffset,
-      newIndexSize * 3
-    );
+  // get result
+  const newIndex = new Int32Array(
+    index2.buffer,
+    index2.byteOffset,
+    newIndexSize2 * 3
+  );
 
-    const newPosition = new Float32Array(
-      position.buffer,
-      position.byteOffset,
-      newPositionSize * 3
-    );
-    wasm._free(index.byteOffset);
-    wasm._free(position.byteOffset);
-    return [newIndex, newPosition];
-  }
+  const newPosition = new Float32Array(
+    position2.buffer,
+    position2.byteOffset,
+    newPositionSize2 * 3
+  );
+  wasm._free(index2.byteOffset);
+  wasm._free(position2.byteOffset);
+  
+  //return [newIndex2, newPosition2];
 };
 
 /**
