@@ -1169,12 +1169,12 @@ namespace Simplify
 	/////////////////////////////////////////////////////////////////////////////////
 
 	/**
-	 * @brief 
-	 * 
-	 * @param index 
-	 * @param indexSize 
-	 * @param positions 
-	 * @param positionSize 
+	 * @brief
+	 *
+	 * @param index
+	 * @param indexSize
+	 * @param positions
+	 * @param positionSize
 	 */
 
 	void read(int *index, int indexSize, float *positions, int positionSize)
@@ -1185,11 +1185,21 @@ namespace Simplify
 		int l = indexSize / 3;
 		for (int i = 0; i < l; i++)
 		{
-			Triangle t;
 			int x = i * 3;
+			if (i < 3)
+			{
+				printf("Triangle:\n");
+				printf("index %d\n", index[x]);
+				printf("index %d\n", index[x + 1]);
+				printf("index %d\n", index[x + 2]);
+			}
+
+			Triangle t;
 			t.v[0] = index[x];
 			t.v[1] = index[x + 1];
 			t.v[2] = index[x + 2];
+			t.attr = 0;
+			t.material = -1;
 			triangles.push_back(t);
 		}
 
@@ -1197,6 +1207,14 @@ namespace Simplify
 		{
 			Vertex v;
 			int pos = index[i];
+			if (i < 3)
+			{
+				printf("Vertex:\n");
+				printf("positions %g\n", positions[pos]);
+				printf("positions %g\n", positions[pos + 1]);
+				printf("positions %g\n", positions[pos + 2]);
+			}
+
 			v.p.x = positions[pos];
 			v.p.y = positions[pos + 1];
 			v.p.z = positions[pos + 2];
