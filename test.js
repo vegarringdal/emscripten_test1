@@ -47,7 +47,7 @@ wasm.onRuntimeInitialized = () => {
   const index2 = new DataSet(newIndexSize1 * 3, "int", wasm);
   const position2 = new DataSet(newPositionSize1 * 3, "float", wasm);
 
-  wasm._fill(index2.byteOffset, position2.byteOffset);
+  wasm._fill(index2.byteOffset, position2.byteOffset, true);
 
   // get result
   const newIndex = new Int32Array(
@@ -64,10 +64,10 @@ wasm.onRuntimeInitialized = () => {
   wasm._free(index2.byteOffset);
   wasm._free(position2.byteOffset);
 
-  console.log(newIndex); // 10104, 10104, 2, 3, 4, 5, 6, 7, 40, wtf ???!?!
-  console.log(index.array); // 0, 1, 2, 3, 4, 5, 6, 7, 8
-  console.log(newPosition);
-  console.log(position.array);
+  console.log("new", newIndex); // 10104, 10104, 2, 3, 4, 5, 6, 7, 40, wtf ???!?!
+  console.log("old", index.array); // 0, 1, 2, 3, 4, 5, 6, 7, 8
+  console.log("new", newPosition);
+  console.log("old", position.array);
   //return [newIndex2, newPosition2];
 };
 

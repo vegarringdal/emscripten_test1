@@ -16,10 +16,10 @@ extern "C"
         // or just own function for status ?
     }
 
-    void fill(int *index, float *positions)
+    void fill(int *index, float *positions, bool debug = true)
     {
         // this prob could have been done in the read part
-        Simplify::fill(index, positions);
+        Simplify::fill(index, positions, debug);
     }
 
     int getTriangeSize()

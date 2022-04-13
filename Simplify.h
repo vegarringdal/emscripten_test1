@@ -1223,7 +1223,7 @@ namespace Simplify
 		}
 	}
 
-	void fill(int *index, float *positions)
+	void fill(int *index, float *positions, bool debug = false)
 	{
 		for (int i = 0; i < triangles.size(); i++)
 		{
@@ -1231,9 +1231,12 @@ namespace Simplify
 			index[x] = triangles[i].v[0];
 			index[x + 1] = triangles[i].v[1];
 			index[x + 2] = triangles[i].v[2];
-			printf("index %d\n", index[x]);
-			printf("index %d\n", index[x + 1]);
-			printf("index %d\n", index[x + 2]);
+			if (debug)
+			{
+				printf("index %d\n", index[x]);
+				printf("index %d\n", index[x + 1]);
+				printf("index %d\n", index[x + 2]);
+			}
 		}
 
 		for (int i = 0; i < vertices.size(); i++)
@@ -1242,6 +1245,12 @@ namespace Simplify
 			positions[x] = vertices[i].p.x;
 			positions[x + 1] = vertices[i].p.y;
 			positions[x + 2] = vertices[i].p.z;
+			if (debug)
+			{
+				printf("index %g\n", positions[x]);
+				printf("index %g\n", positions[x + 1]);
+				printf("index %g\n", positions[x + 2]);
+			}
 		}
 	}
 
