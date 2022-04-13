@@ -1230,6 +1230,13 @@ namespace Simplify
 			index[x] = triangles[i].v[0];
 			index[x + 1] = triangles[i].v[1];
 			index[x + 2] = triangles[i].v[2];
+			if (triangles[i].deleted)
+			{
+				printf("deleted:\n");
+				printf("deleted %d\n", triangles[i].v[0]);
+				printf("deleted %d\n", triangles[i].v[1]);
+				printf("deleted %d\n", triangles[i].v[1]);
+			}
 		}
 
 		for (int i = 0; i < vertices.size(); i++)

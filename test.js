@@ -13,19 +13,17 @@ wasm.onRuntimeInitialized = () => {
     position.length
   );
 
-  {
-    const newIndexSize = wasm._getTriangeSize();
-    const newPositionSize = wasm._getVertexSize();
-    console.log(newIndexSize, newPositionSize);
-  }
+  const newIndexSize0 = wasm._getTriangeSize();
+  const newPositionSize0 = wasm._getVertexSize();
+  console.log(newIndexSize0, newPositionSize0);
 
   wasm._simplify_mesh(10, 7, true);
   wasm._fill(index.byteOffset, position.byteOffset);
 
   // check if we have filled it
-  const newIndexSize = wasm._getTriangeSize();
-  const newPositionSize = wasm._getVertexSize();
-  console.log(newIndexSize, newPositionSize);
+  const newIndexSize1 = wasm._getTriangeSize();
+  const newPositionSize1 = wasm._getVertexSize();
+  console.log(newIndexSize1, newPositionSize1);
 
   wasm._simplify_mesh(50, 5, true);
   wasm._free(index.byteOffset);
@@ -52,7 +50,7 @@ wasm.onRuntimeInitialized = () => {
   );
   wasm._free(index2.byteOffset);
   wasm._free(position2.byteOffset);
-  
+
   //return [newIndex2, newPosition2];
 };
 
