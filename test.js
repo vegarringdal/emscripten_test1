@@ -4,15 +4,15 @@ const { performance } = require("perf_hooks");
 
 wasm.onRuntimeInitialized = () => {
   // add holder for data
-  const index = new DataSet(6, "int", wasm);
-  const position = new DataSet(6 * 3, "float", wasm);
+  const index = new DataSet(10, "int", wasm);
+  const position = new DataSet(10 * 3, "float", wasm);
 
   // add data
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i < 10; i++) {
     index.array[i] = i;
   }
 
-  for (let i = 0; i < 6 * 3; i++) {
+  for (let i = 0; i < 10 * 3; i++) {
     position.array[i] = i;
   }
 

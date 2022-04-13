@@ -1192,13 +1192,14 @@ namespace Simplify
 			t.v[2] = index[x + 2];
 			if (debug)
 			{
+				printf("round: %d\n", i);
 				printf("index %d\n", index[x]);
 				printf("index %d\n", index[x + 1]);
 				printf("index %d\n", index[x + 2]);
-				printf("---%d\n", i);
 				printf("triange %d\n", t.v[0]);
 				printf("triange %d\n", t.v[1]);
 				printf("triange %d\n", t.v[2]);
+				printf("---\n");
 			}
 			t.attr = 0;
 			t.material = -1;
@@ -1230,6 +1231,9 @@ namespace Simplify
 			index[x] = triangles[i].v[0];
 			index[x + 1] = triangles[i].v[1];
 			index[x + 2] = triangles[i].v[2];
+			printf("index %d\n", index[x]);
+			printf("index %d\n", index[x + 1]);
+			printf("index %d\n", index[x + 2]);
 		}
 
 		for (int i = 0; i < vertices.size(); i++)
