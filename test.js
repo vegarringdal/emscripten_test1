@@ -1,50 +1,62 @@
 const m = require("./main.js");
 const { performance } = require("perf_hooks");
 
+
+class DataSet{
+
+  /**
+   * 
+   * @param {number} length 
+   * @param {'float' | 'int'} type 
+   */
+  constructor(length, type){
+
+    this.length = length;
+    this.type = type;
+    if(type === "int"){
+      this.array = new Int32Array(this.length);
+    } else {
+      this.array = new Float32Array(this.length);
+    }
+
+    this.byteSize = this.array.length * this.array.BYTES_PER_ELEMENT;
+    this.ptr = m._malloc(this.byteSize);
+    this.heap = new Uint8Array(m.HEAP8.buffer,  this.ptr, this.byteSize);
+    this.heap.set(new Uint8Array(this.array.buffer));
+
+  }
+}
+
+
 m.onRuntimeInitialized = () => {
-  // create array
-  const length = 500_000_000; // ALLOW_MEMORY_GROWTH -s MAXIMUM_MEMORY=4GB looks like these dont do anything.. probably will never need it, but still.
-  const data = new Float32Array(length);
-  const bytes = data.length * data.BYTES_PER_ELEMENT;
-  console.log(4_294_967_295 - bytes);
-  console.log(bytes / 1_000_000_000, "GB");
-  console.log(4_294_967_295 < bytes);
+ 
+  const index = new DataSet(6, 'int');
+  const position = new DataSet(6*3, 'positions');
 
-  // pointer
-  const t1 = performance.now();
-  const dataPtr = m._malloc(bytes);
-  const usedTime1 = performance.now() - t1;
+  m._read(index.heap.byteOffset, index.length, position.heap.byteOffset, position.length);
 
-  // allocate/copy
-  const dataHeap = new Uint8Array(m.HEAP8.buffer, dataPtr, bytes);
+  const newIndexSize = m._getTriangeSize();
+  const newPositionSize = m._getVertexSize()
 
-  const usedTime2 = performance.now() - t1;
-
-  dataHeap.set(new Uint8Array(data.buffer));
-
-  const usedTime3 = performance.now() - t1;
-
-  // call
-  m._fill_float_array(dataHeap.byteOffset, length);
-
-  const usedTime4 = performance.now() - t1;
+  m._fill(index.heap.byteOffset, position.heap.byteOffset);
 
   // get result
-  const result = new Float32Array(
-    dataHeap.buffer,
-    dataHeap.byteOffset,
-    data.length
+  const newIndex = new Int32Array(
+    index.heap.buffer,
+    index.heap.byteOffset,
+    index.length
   );
 
-  const usedTime5 = performance.now() - t1;
-  console.log(result);
-  console.log(result.length);
-  console.log(usedTime1);
-  console.log(usedTime2);
-  console.log(usedTime3);
-  console.log(usedTime4);
-  console.log(usedTime5);
+  const newPosition = new Float32Array(
+    position.heap.buffer,
+    position.heap.byteOffset,
+    position.length
+  );
+
 
   // Free memory
-  m._free(dataHeap.byteOffset);
+  m._free(index.heap.byteOffset);
+  m._free(position.heap.byteOffset);
+
+
 };
