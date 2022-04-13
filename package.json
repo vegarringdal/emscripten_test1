@@ -6,7 +6,9 @@
   "scripts": {
     "start": "node main",
     "init": "cd ../emsdk/ && emsdk activate latest",
-    "emc": "emcc -O3 main.cpp -o main.js -s EXPORTED_FUNCTIONS=[_read,_fill,_getTriangeSize,_getVertexSize,_malloc,_free] -s ALLOW_MEMORY_GROWTH -s MAXIMUM_MEMORY=4GB  -s EXPORTED_RUNTIME_METHODS=ccall,cwrap"
+    "emc": "emcc -O3 main.cpp -o main.js -s EXPORTED_FUNCTIONS=[_read,_fill,_getTriangeSize,_getVertexSize,_malloc,_simplify_mesh,_free] -s ALLOW_MEMORY_GROWTH -s MAXIMUM_MEMORY=4GB  -s EXPORTED_RUNTIME_METHODS=ccall,cwrap",
+    "emc-m": "emcc -O3 main.cpp -o main.mjs -s EXPORTED_FUNCTIONS=[_read,_fill,_getTriangeSize,_getVertexSize,_malloc,_simplify_mesh,_free] -s ALLOW_MEMORY_GROWTH -s MAXIMUM_MEMORY=4GB  -s EXPORTED_RUNTIME_METHODS=ccall,cwrap"
+    
   },
   "repository": {
     "type": "git",
