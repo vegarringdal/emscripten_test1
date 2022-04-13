@@ -1177,7 +1177,7 @@ namespace Simplify
 	 * @param positionSize
 	 */
 
-	void read(int *index, int indexSize, float *positions, int positionSize)
+	void read(int *index, int indexSize, float *positions, int positionSize, bool debug = false)
 	{
 		triangles.clear();
 		vertices.clear();
@@ -1190,6 +1190,16 @@ namespace Simplify
 			t.v[0] = index[x];
 			t.v[1] = index[x + 1];
 			t.v[2] = index[x + 2];
+			if (debug)
+			{
+				printf("index %d\n", index[x]);
+				printf("index %d\n", index[x + 1]);
+				printf("index %d\n", index[x + 2]);
+				printf("---%d\n", i);
+				printf("triange %d\n", t.v[0]);
+				printf("triange %d\n", t.v[1]);
+				printf("triange %d\n", t.v[2]);
+			}
 			t.attr = 0;
 			t.material = -1;
 			triangles.push_back(t);
@@ -1202,8 +1212,13 @@ namespace Simplify
 			v.p.x = positions[pos];
 			v.p.y = positions[pos + 1];
 			v.p.z = positions[pos + 2];
+			if (debug)
+			{
+				printf("positions %g\n", positions[pos]);
+				printf("positions %g\n", positions[pos + 1]);
+				printf("positions %g\n", positions[pos + 2]);
+			}
 			vertices.push_back(v);
-
 		}
 	}
 

@@ -25,7 +25,8 @@ wasm.onRuntimeInitialized = () => {
     index.byteOffset,
     index.length,
     position.byteOffset,
-    position.length
+    position.length,
+    true
   );
 
   // check before we have simplified it
@@ -63,6 +64,10 @@ wasm.onRuntimeInitialized = () => {
   wasm._free(index2.byteOffset);
   wasm._free(position2.byteOffset);
 
+  console.log(newIndex)
+  console.log(index.array)
+  console.log(newPosition)
+  console.log(position.array)
   //return [newIndex2, newPosition2];
 };
 

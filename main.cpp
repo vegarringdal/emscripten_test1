@@ -3,9 +3,9 @@
 
 extern "C"
 {
-    void read(int *index, int indexSize, float *positions, int positionSize)
+    void read(int *index, int indexSize, float *positions, int positionSize, bool debug = false)
     {
-        Simplify::read(index, indexSize, positions, positionSize);
+        Simplify::read(index, indexSize, positions, positionSize, debug);
     }
 
     void simplify_mesh(double target_count = 10, double agressiveness = 7.0, bool verbose = true)
