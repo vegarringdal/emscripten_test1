@@ -15,7 +15,15 @@ wasm.onRuntimeInitialized = () => {
 
   for (let i = 0; i < length * 3; i++) {
     if (i === 3 || i === 4 || i === 5) {
-      position.array[i] = position.array[i - 1];
+      if (i === 3) {
+        position.array[i] = 0;
+      }
+      if (i === 4) {
+        position.array[i] = 1;
+      }
+      if (i === 5) {
+        position.array[i] = 2;
+      }
     } else {
       position.array[i] = i;
     }
@@ -51,7 +59,7 @@ wasm.onRuntimeInitialized = () => {
     newPositionSize0 * 3
   );
 
-/*   wasm._simplify_mesh(parseInt(newIndexSize0 * 0.5), 7, true);  */
+  /*   wasm._simplify_mesh(parseInt(newIndexSize0 * 0.5), 7, true);  */
 
   // check after we have simplified it
   const newIndexSize1 = wasm._getTriangeSize();

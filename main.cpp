@@ -16,6 +16,11 @@ extern "C"
         // or just own function for status ?
     }
 
+    void simplify_lossless()
+    {
+        Simplify::simplify_mesh_lossless();
+    }
+
     void fill(int *index, float *positions, bool debug = true)
     {
         // this prob could have been done in the read part
