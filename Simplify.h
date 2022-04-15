@@ -26,6 +26,7 @@
 #include <string>
 #include <math.h>
 #include <float.h> //FLT_EPSILON, DBL_EPSILON
+#include <unordered_map>
 
 #define loopi(start_l, end_l) for (int i = start_l; i < end_l; ++i)
 #define loopi(start_l, end_l) for (int i = start_l; i < end_l; ++i)
@@ -1187,20 +1188,42 @@ namespace Simplify
 			printf("READ called\n");
 		}
 
+		std::vector<int> indexRebuilt;
+		std::unordered_map<std::string, int> map;
+
+		for (int i = 0; i < indexSize; i++)
+		{
+			int pos = index[i] * 3;
+			auto x = positions[pos];
+			auto y = positions[pos + 1];
+			auto z = positions[pos + 2];
+			auto sv = std::to_string(x) + "-" + std::to_string(y) + "-" + std::to_string(z);
+			auto found = map.find(sv);
+			if (found == map.end())
+			{
+				map.insert({sv, index[i]});
+				indexRebuilt.push_back(index[i]);
+			}
+			else
+			{
+				indexRebuilt.push_back(found->second);
+			}
+		}
+
 		int l = indexSize / 3;
 		for (int i = 0; i < l; i++)
 		{
 			int x = i * 3;
 			Triangle t;
-			t.v[0] = index[x];
-			t.v[1] = index[x + 1];
-			t.v[2] = index[x + 2];
+			t.v[0] = indexRebuilt[x];
+			t.v[1] = indexRebuilt[x + 1];
+			t.v[2] = indexRebuilt[x + 2];
 			if (debug)
 			{
 				printf("round: %d\n", i);
-				printf("index %d\n", index[x]);
-				printf("index %d\n", index[x + 1]);
-				printf("index %d\n", index[x + 2]);
+				printf("index %d\n", indexRebuilt[x]);
+				printf("index %d\n", indexRebuilt[x + 1]);
+				printf("index %d\n", indexRebuilt[x + 2]);
 				printf("triange %d\n", t.v[0]);
 				printf("triange %d\n", t.v[1]);
 				printf("triange %d\n", t.v[2]);
@@ -1214,7 +1237,7 @@ namespace Simplify
 		for (int i = 0; i < indexSize; i++)
 		{
 			Vertex v;
-			int pos = index[i] * 3;
+			int pos = indexRebuilt[i] * 3;
 			v.p.x = positions[pos];
 			v.p.y = positions[pos + 1];
 			v.p.z = positions[pos + 2];

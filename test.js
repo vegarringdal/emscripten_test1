@@ -14,7 +14,11 @@ wasm.onRuntimeInitialized = () => {
   }
 
   for (let i = 0; i < length * 3; i++) {
-    position.array[i] = i;
+    if (i === 3 || i === 4 || i === 5) {
+      position.array[i] = position.array[i - 1];
+    } else {
+      position.array[i] = i;
+    }
   }
 
   // update heap
@@ -47,7 +51,7 @@ wasm.onRuntimeInitialized = () => {
     newPositionSize0 * 3
   );
 
-  wasm._simplify_mesh(parseInt(newIndexSize0 * 0.6), 7, true);
+/*   wasm._simplify_mesh(parseInt(newIndexSize0 * 0.5), 7, true);  */
 
   // check after we have simplified it
   const newIndexSize1 = wasm._getTriangeSize();
