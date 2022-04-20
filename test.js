@@ -72,18 +72,18 @@ wasm.onRuntimeInitialized = () => {
 
   wasm._fill(index2.byteOffset, position2.byteOffset, true);
 
-  // get result
-  const newIndex2 = new Uint32Array(
+  // get result (wrap array i array, so I can free memory)
+  const newIndex2 = new Uint32Array(new Uint32Array(
     index2.buffer,
     index2.byteOffset,
     newIndexSize1 * 3
-  );
+  ));
 
-  const newPosition2 = new Float32Array(
+  const newPosition2 = new Float32Array(new Float32Array(
     position2.buffer,
     position2.byteOffset,
     newPositionSize1 * 3
-  );
+  ));
 
   console.log("new", newIndex2); // 10104, 10104, 2, 3, 4, 5, 6, 7, 40, wtf ???!?!
   console.log("old", newIndex); // 0, 1, 2, 3, 4, 5, 6, 7, 8
@@ -96,7 +96,7 @@ wasm.onRuntimeInitialized = () => {
   wasm._free(index.byteOffset);
   wasm._free(position.byteOffset);
 
-  //return [newIndex2, newPosition2];
+  return [newIndex2, newPosition2];
 };
 
 /**
